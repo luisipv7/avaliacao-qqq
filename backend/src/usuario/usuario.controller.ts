@@ -7,9 +7,11 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { Usuario } from './entities/usuario.entity';
@@ -25,17 +27,20 @@ export class UsuarioController {
     return this.usuarioService.create(createUsuarioDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   findAll(): Promise<Usuario[]> {
     return this.usuarioService.findAll();
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('/:id')
   @UsePipes(ValidationPipe)
   findOne(@Param('id') id: number): Promise<Usuario> {
     return this.usuarioService.findOne(+id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch('/:id')
   @UsePipes(ValidationPipe)
   update(
@@ -45,6 +50,7 @@ export class UsuarioController {
     return this.usuarioService.update(+id, updateUsuarioDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete('/:id')
   @UsePipes(ValidationPipe)
   remove(@Param('id') id: number): Promise<boolean> {
