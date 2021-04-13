@@ -14,7 +14,7 @@ export class Tweet {
 
   @ManyToOne(
     type => Usuario,
-    usuario => usuario.tweet
+    usuario => usuario.tweet,
   )
   @JoinColumn()
   usuario: Usuario;

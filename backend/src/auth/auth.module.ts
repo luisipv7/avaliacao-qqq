@@ -7,9 +7,9 @@ import { AuthController } from './auth.controller';
 import { JwtStrategy } from './jwt.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
-import * as ms from 'ms'
+import * as ms from 'ms';
 
-const seconds = (ms('7 days') / 1000)
+const seconds = ms('7 days') / 1000;
 
 @Module({
   imports: [
@@ -24,4 +24,4 @@ const seconds = (ms('7 days') / 1000)
   providers: [AuthService, LocalStrategy, JwtStrategy],
   controllers: [AuthController],
 })
-export class AuthModule { }
+export class AuthModule {}
