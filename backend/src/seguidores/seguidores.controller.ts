@@ -36,6 +36,7 @@ export class SeguidoresController {
     );
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.seguidoresService.findAll();
@@ -47,6 +48,7 @@ export class SeguidoresController {
     return this.seguidoresService.findOne(+id_usuario);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.seguidoresService.remove(+id);
