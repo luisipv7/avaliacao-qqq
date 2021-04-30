@@ -4,6 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { split } from 'lodash';
 import { Repository } from 'typeorm';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
@@ -13,8 +14,8 @@ import { Usuario } from './entities/usuario.entity';
 export class UsuarioService {
   constructor(
     @InjectRepository(Usuario) private usuarioRepository: Repository<Usuario>,
-  ) {}
-  async create(createUsuarioDto: CreateUsuarioDto) {
+  ) { }
+  async create (createUsuarioDto: CreateUsuarioDto) {
     const { email } = createUsuarioDto;
     const hasEmail = await this.usuarioRepository.findOne({ email });
 
@@ -27,11 +28,12 @@ export class UsuarioService {
     return this.usuarioRepository.save(data);
   }
 
-  findAll() {
+  findAll () {
     return this.usuarioRepository.find();
   }
 
-  async findOne(id: number) {
+
+  async findOne (id: number) {
     const usuarioEncontrado = await this.usuarioRepository.findOne({ id });
 
     if (!usuarioEncontrado) {
@@ -41,11 +43,11 @@ export class UsuarioService {
     return usuarioEncontrado;
   }
 
-  async getByEmail(email: string) {
+  async getByEmail (email: string) {
     return this.usuarioRepository.findOne({ email });
   }
 
-  async update(id: number, updateUsuarioDto: UpdateUsuarioDto) {
+  async update (id: number, updateUsuarioDto: UpdateUsuarioDto) {
     const usuarioEncontrado = await this.findOne(id);
     await this.usuarioRepository.update(usuarioEncontrado, {
       ...updateUsuarioDto,
@@ -58,7 +60,7 @@ export class UsuarioService {
     return usuarioUpdated;
   }
 
-  async remove(id: number) {
+  async remove (id: number) {
     const usuarioEncontrado = await this.findOne(id);
 
     if (usuarioEncontrado) {

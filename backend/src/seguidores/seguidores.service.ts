@@ -18,15 +18,18 @@ export class SeguidoresService {
   }
 
   async findOne(id: number) {
+    console.log('findOne.usuario_id', id);
+    
     const seguidorEncontrado = await this.seguidoresRepository.findOne({
       usuario_id: id,
     });
-
+    
     if (!seguidorEncontrado) {
       this.logger.log(seguidorEncontrado);
       return undefined;
     }
-
+    
+    console.log('findOne.seguidorEncontrado', seguidorEncontrado);
     return seguidorEncontrado;
   }
 
@@ -58,7 +61,10 @@ export class SeguidoresService {
     id_usuario: number,
     updateSeguidoreDto: UpdateSeguidoreDto,
   ) {
+    console.log('id_usuario', id_usuario);
     const encontrado = await this.findOne(id_usuario);
+    console.log('encontrado', encontrado);
+    
 
     if (!encontrado) {
       return this.criarSeguidor(updateSeguidoreDto);
